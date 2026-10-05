@@ -58,7 +58,26 @@ Additional documentation https://kdmukai-bot.github.io/seedsigner-ai-analysis/di
 
 # Checksum
 
+To calculate the checksum of the last word (24th) the script follow these steps:
 
+1. Generate initial entropy with dices, generally speaking this value must be 128, 160, 192, 224, or 256 (script support only 128 or 256).
+2. Compute SHA-256 hash of the entropy bits.
+3. Convert this hash to a binary format
+4. Take the first N bits of the resulting binary format, as summarized in this table 
+5. Append these bits to the end of the initial entropy sequence to complete le last word (24th)
+
+| Word Count | ENT Bits | Checksum Bits (N) |
+| :--- | :--- | :--- |
+| 12 | 128 | 4 |
+| 15 | 160 | 5 |
+| 18 | 192 | 6 |
+| 21 | 224 | 7 |
+| 24 | 256 | 8 |
+
+
+The 24th word now have 11 bits as the preceding 23 words and you can complete the wallet mnemonics, because you have appended the last spare bits at the end of the achieved entropy sequence with the achieved bits from checksum.
+
+In case the checksum it's calculate badly, when you'll import the mnemonics in a wallet, it will signal it.
 
 
 # Test script
